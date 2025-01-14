@@ -6,10 +6,11 @@ void	execute(char *cmd, char **env)
 	char	*path;
 
 	split_cmd = ft_split(cmd, ' ');
-	printf("aaa");
 	path = getpath(split_cmd[0], env);
 	if (execve(path, split_cmd, env) == -1)
 	{
+		ft_putstr_fd("pipex: command not found: ", 2);
+		ft_putendl_fd(split_cmd[0], 2);
 		freeall(split_cmd);
 		exit(0);
 	}
@@ -18,12 +19,13 @@ void	execute(char *cmd, char **env)
 void	child(char **argv, int *p_fd, char **env)
 {
 	int fd;
+	int	copy_out;
 
-	printf("aba");
+	printf("child 1");
 	fd = open_f(argv[1], 0);
-	dup2(fd, 0);
-	dup2(p_fd[1], 1);
-	close(p_fd[0]);
+	dup2(fd, STDIN_FILENO);
+	dup2(p_fd[1], STDOUT_FILENO);
+	close (p_fd[0]);
 	execute(argv[2], env);
 }
 
@@ -32,9 +34,9 @@ void	parent(char **argv, int *p_fd, char **env)
 	int fd;
 
 	fd = open_f(argv[4], 1);
-	dup2(p_fd[0], 0);
-	dup2(fd, 1);
-	close(p_fd[1]);
+	dup2(fd, STDOUT_FILENO);
+	dup2(p_fd[0], STDIN_FILENO);
+	close (p_fd[1]);
 	execute(argv[3], env);
 }
 
@@ -44,8 +46,6 @@ int main(int argc, char **argv, char **env)
 	pid_t	pid;
 	int	i = 0;
 
-	printf("%s", "aaa");
-	printf("aaa");
 	if (argc != 5)
 		exitaux();
 	if (pipe(p_fd) == -1)
@@ -53,8 +53,8 @@ int main(int argc, char **argv, char **env)
 	pid = fork();
 	if (pid == -1)
 		exit (-1);
-	printf("aaa");
 	if (!pid)
 		child(argv, p_fd, env);
+	close (p_fd[1]);
 	parent(argv, p_fd, env);
 }

@@ -36,8 +36,10 @@ char	*getpathaux(char *path, char **env)
 	int	j;
 	char	*key;
 
+	i = 0;
 	while (env[i])
 	{
+		j = 0;
 		while (env[i][j] != '=')
 			j++;
 		key = ft_substr(env[i], 0, j);
@@ -60,6 +62,7 @@ char	*getpath(char *cmd, char **env)
 	char	*fullpath;
 
 	paths = ft_split(getpathaux("PATH", env), ':');
+	i = 0;
 	while (paths[i])
 	{
 		eachpath = ft_strjoin(paths[i], "/");
@@ -68,10 +71,12 @@ char	*getpath(char *cmd, char **env)
 		free (eachpath);
 		if (access(fullpath, F_OK | X_OK) == 0)
 		{
+			freeall(paths);
 			return (fullpath);
 		}
 		free(fullpath);
 		i++;
 	}
+	freeall(paths);
 	return (cmd);
 }

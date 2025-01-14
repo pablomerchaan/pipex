@@ -10,6 +10,9 @@
 # include <fcntl.h>  
 # include <stdlib.h>
 
+void	ft_putstr_fd(char *s, int fd);
+void	ft_putendl_fd(char *s, int fd);
+void	ft_putchar_fd(char c, int fd);
 int	ft_putstr(char *str);
 char	**ft_split(char const *s, char c);
 void exitaux();
