@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipex.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: paperez- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/10 04:04:10 by paperez-          #+#    #+#             */
+/*   Updated: 2025/02/10 04:24:09 by paperez-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "pipex.h"
 
 void	execute(char *cmd, char **env)
@@ -18,8 +30,7 @@ void	execute(char *cmd, char **env)
 
 void	child(char **argv, int *p_fd, char **env)
 {
-	int fd;
-	int	copy_out;
+	int	fd;
 
 	printf("child 1");
 	fd = open_f(argv[1], 0);
@@ -31,7 +42,7 @@ void	child(char **argv, int *p_fd, char **env)
 
 void	parent(char **argv, int *p_fd, char **env)
 {
-	int fd;
+	int	fd;
 
 	fd = open_f(argv[4], 1);
 	dup2(fd, STDOUT_FILENO);
@@ -40,11 +51,10 @@ void	parent(char **argv, int *p_fd, char **env)
 	execute(argv[3], env);
 }
 
-int main(int argc, char **argv, char **env)
+int	main(int argc, char **argv, char **env)
 {
-	int	p_fd[2];
 	pid_t	pid;
-	int	i = 0;
+	int		p_fd[2];
 
 	if (argc != 5)
 		exitaux();

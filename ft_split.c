@@ -6,7 +6,7 @@
 /*   By: paperez- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 14:37:42 by paperez-          #+#    #+#             */
-/*   Updated: 2024/12/21 14:49:35 by paperez-         ###   ########.fr       */
+/*   Updated: 2025/02/10 04:03:09 by paperez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,19 @@ char	**ft_split(char const *s, char c)
 	}
 	words[j] = NULL;
 	return (words);
+}
+
+int	ft_putstr(char *str)
+{
+	int	c;
+
+	c = 0;
+	if (str == 0)
+		return (ft_putstr("(null)"));
+	while (str[c] != '\0')
+	{
+		write (1, &str[c], 1);
+		c++;
+	}
+	return (c);
 }

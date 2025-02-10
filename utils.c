@@ -1,14 +1,26 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: paperez- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/10 04:04:20 by paperez-          #+#    #+#             */
+/*   Updated: 2025/02/10 04:22:39 by paperez-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "pipex.h"
 
-void exitaux()
+void	exitaux(void)
 {
 	ft_putstr("./pipex infile cmd cmd outfile\n");
 	exit(0);
 }
 
-int open_f(char *file, int sw)
+int	open_f(char *file, int sw)
 {
-	int r;
+	int	r;
 
 	if (sw == 0)
 		r = open(file, O_RDONLY, 0777);
@@ -19,7 +31,7 @@ int open_f(char *file, int sw)
 
 void	freeall(char **m)
 {
-	int c;
+	int	c;
 
 	c = 0;
 	while (m[c])
@@ -32,9 +44,9 @@ void	freeall(char **m)
 
 char	*getpathaux(char *path, char **env)
 {
-	int	i;
-	int	j;
 	char	*key;
+	int		i;
+	int		j;
 
 	i = 0;
 	while (env[i])
@@ -56,10 +68,10 @@ char	*getpathaux(char *path, char **env)
 
 char	*getpath(char *cmd, char **env)
 {
-	int	i;
 	char	**paths;
 	char	*eachpath;
 	char	*fullpath;
+	int		i;
 
 	paths = ft_split(getpathaux("PATH", env), ':');
 	i = 0;
